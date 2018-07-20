@@ -9,6 +9,8 @@
             "else": { "before": false }
         }}],
     "generator-star-spacing": "off",
-    "semi":["error", "never"]
+    "semi":["error", "never"],
+    "comma-dangle": ["error", "never"],
+    "linebreak-style": "off"
   }
 }
