@@ -4,9 +4,7 @@ const Controller = require('egg').Controller
 
 class HomeController extends Controller {
   async index() {
-    this.ctx.body = 'hi, egg'
-    const client1 = await this.app.mysql.select('blog_users')
-    console.log(client1)
+    // this.ctx.body = 'hi egg'
   }
 
   // *test() {
@@ -14,6 +12,11 @@ class HomeController extends Controller {
   //   console.log(result)
   //   return result
   // }
+
+  async test() {
+    console.log('aaa')
+    await this.ctx.render('test')
+  }
 }
 
 module.exports = HomeController

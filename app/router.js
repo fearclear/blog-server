@@ -5,10 +5,11 @@
 */
 module.exports = app => {
   const { router, controller } = app
-  router.get('/', controller.home.index)
-  /**
-   * user
-   */
-  router.get('/user/:id', controller.home.index)
+  // router.redirect('/', '/home')
+  // router.get('/index', controller.home.index)
+  router.get('/test', controller.home.test)
+  require('./router/home')(app)
+  require('./router/sign')(app)
+  require('./router/user')(app)
 }
 
