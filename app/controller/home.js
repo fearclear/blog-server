@@ -4,7 +4,7 @@ const Controller = require('egg').Controller
 
 class HomeController extends Controller {
   async index() {
-    // this.ctx.body = 'hi egg'
+    this.ctx.body = 'hi egg'
   }
 
   // *test() {
@@ -13,10 +13,6 @@ class HomeController extends Controller {
   //   return result
   // }
 
-  async test() {
-    console.log('aaa')
-    await this.ctx.render('test')
-  }
 }
 
 module.exports = HomeController

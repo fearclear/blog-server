@@ -1,14 +1,11 @@
 'use strict'
 
-const path = require('path')
-
 module.exports = appInfo => {
   const config = exports = {}
 
   exports.cluster = {
     listen: {
-      port: 3000,
-      hostname: '127.0.0.1'
+      port: 3000
     }
   }
 
@@ -16,7 +13,11 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1531231790825_9819'
 
   // add your config here
-  config.middleware = []
+  config.middleware = [ 'gzip' ]
+
+  config.gzip = {
+    threshold: 1024
+  }
 
   // CSRF
   config.security = {
@@ -36,11 +37,6 @@ module.exports = appInfo => {
       '.html': 'nunjucks',
       '.nj': 'nunjucks'
     }
-  }
-
-  config.static = {
-    prefix: '/blog',
-    dir: path.join(appInfo.baseDir, 'app/public/blog')
   }
 
   config.mysql = {

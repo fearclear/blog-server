@@ -10,8 +10,8 @@
     "egg-scripts": "^2.5.0",
     "egg-static": "^2.1.1",
     "egg-view-assets": "^1.1.2",
-    "egg-view-ejs": "^2.0.0",
-    "egg-view-nunjucks": "^2.2.0"
+    "egg-view-nunjucks": "^2.2.0",
+    "koa-is-json": "^1.0.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
