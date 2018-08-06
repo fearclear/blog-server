@@ -10,7 +10,7 @@ module.exports = appInfo => {
   }
 
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1531231790825_9819'
+  config.keys = appInfo.name + '_17463812930874_1837'
 
   // add your config here
   config.middleware = [ 'gzip' ]
@@ -22,6 +22,7 @@ module.exports = appInfo => {
   // CSRF
   config.security = {
     csrf: {
+      enable: false,
       queryName: '_csrf',
       bodyName: '_csrf',
       headerName: 'x-fc-csrf',

@@ -3,19 +3,15 @@
 const { app, assert } = require('egg-mock/bootstrap')
 
 describe('test/app/controller/home.test.js', () => {
-  it('should assert', function*() {
+  it('项目名称检查', function*() {
     const pkg = require('../../../package.json')
-    assert(app.config.keys.startsWith(pkg.name))
-
-    // const ctx = app.mockContext({});
-    // yield ctx.service.xx();
+    assert(app.config.keys.startsWith(`${pkg.name}`))
   })
 
-  it('should GET /', () => {
+  it('首页跳转重定向', () => {
     return app
       .httpRequest()
       .get('/')
-      .expect('hi, egg')
-      .expect(200)
+      .expect(301)
   })
 })

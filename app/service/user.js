@@ -10,6 +10,18 @@ class UserService extends Service {
       client1
     }
   }
+  *getUser(payload) {
+    return yield this.app.mysql.query('blog_users', payload)
+  }
+  *addUser(payload) {
+    return yield this.app.mysql.insert('blog_users', payload)
+  }
+  *deleteUser(payload) {
+    return yield this.app.mysql.delete('blog_users', payload)
+  }
+  *updateUser(payload) {
+    return yield this.app.mysql.updateUser('blog_users', payload)
+  }
 }
 
 module.exports = UserService
