@@ -13,6 +13,7 @@
     "egg-view-nunjucks": "^2.2.0",
     "koa-is-json": "^1.0.0",
     "md5": "^2.2.1",
+    "nodemailer": "^4.6.7",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
