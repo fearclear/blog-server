@@ -13,7 +13,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_17463812930874_1837'
 
   // add your config here
-  config.middleware = [ 'gzip' ]
+  config.middleware = [ 'gzip', 'response' ]
 
   config.gzip = {
     threshold: 1024
