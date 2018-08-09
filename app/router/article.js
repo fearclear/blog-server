@@ -2,6 +2,6 @@
 
 module.exports = app => {
   const { router, controller } = app
-  const home = router.namespace('/sign')
+  const home = router.namespace('/blog/api/sign')
   home.post('/signIn', controller.sign.signIn)
 }

@@ -8,7 +8,11 @@ describe('test/app/controller/sign.test.js', () => {
     return app
       .httpRequest()
       .post('/sign/signUp')
-      .expect(200)
+      .type('form')
+      .send({
+        userName: '123'
+      })
+      .expect(400)
   })
 })
 

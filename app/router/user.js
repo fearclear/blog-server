@@ -2,6 +2,6 @@
 
 module.exports = app => {
   const { router, controller } = app
-  const home = router.namespace('/user')
-  home.get('/', controller.home.index)
+  const user = router.namespace('/blog/api/user')
+  user.resources('user', '/', controller.user)
 }
