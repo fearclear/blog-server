@@ -57,10 +57,5 @@ module.exports = appInfo => {
     agent: false
   }
 
-  config.passportLocal = {
-    usernameField: 'userName',
-    passwordField: 'password'
-  }
-
   return config
 }

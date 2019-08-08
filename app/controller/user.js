@@ -11,37 +11,40 @@ class UserController extends Controller {
     this.bcompare = this.ctx.helper.bcompare
   }
 
-
-  async status() {
-    // console.log(this.ctx.model.user)
-  }
-
   async signin() {
     const { userName, password } = this.ctx.request.body
     await this.ctx.validator(this.rule.signInRule, this.ctx.request.body)
-    const user = await this.ctx.service.user.get({ userName, password })
-    if(!user.length) {
+
+    const getUser = userName => {
+      if(~userName.indexOf('@')) {
+        return this.ctx.service.user.getUserByMail(userName)
+      }
+      return this.ctx.service.user.getUserByNickName(userName)
+    }
+
+    const exitUser = await getUser(userName)
+
+    if(!exitUser) {
       this.ctx.body = {
         text: '用户名不存在',
         status: 400
       }
       return
     }
-    const userInfo = user[0]
 
-    const equal = await (this.bcompare(password, userInfo.password))
-    if(equal) {
-      delete userInfo.password
-      this.ctx.body = {
-        ...userInfo
-      }
-    }else {
+    const equal = await (this.bcompare(password, exitUser.password))
+
+    if(!equal) {
       this.ctx.body = {
         text: '密码错误',
         status: 400
       }
     }
-    this.ctx.rotateCsrfSecret()
+
+    delete exitUser.password
+    this.ctx.body = {
+      ...exitUser
+    }
   }
 
   async signup() {
