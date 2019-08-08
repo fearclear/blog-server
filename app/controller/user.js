@@ -7,7 +7,8 @@ class UserController extends Controller {
   constructor(props) {
     super(props)
     this.rule = this.ctx.helper.rule.userRule
-    this.salt = this.ctx.helper.salt
+    this.bhash = this.ctx.helper.bhash
+    this.bcompare = this.ctx.helper.bcompare
   }
 
 
@@ -27,7 +28,9 @@ class UserController extends Controller {
       return
     }
     const userInfo = user[0]
-    if(this.salt(userInfo.nickName, password) === userInfo.password) {
+
+    const equal = await (this.bcompare(password, userInfo.password))
+    if(equal) {
       delete userInfo.password
       this.ctx.body = {
         ...userInfo
@@ -51,7 +54,7 @@ class UserController extends Controller {
         email,
         nickName
       }
-      params.password = this.salt(nickName, password)
+      params.password = this.bhash(password)
       const result = await this.ctx.service.user.addUser(params)
       this.ctx.body = {
         result
@@ -60,6 +63,13 @@ class UserController extends Controller {
     }
     this.ctx.body = {
       text: '用户名已存在',
+      status: 400
+    }
+  }
+
+  async signFail() {
+    this.ctx.body = {
+      text: '登录失败',
       status: 400
     }
   }

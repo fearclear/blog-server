@@ -45,12 +45,6 @@
       "address": "localhost",
       "protocol": "auto",
       "port": 9999
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "test",
-      "program": "${file}"
     }
   ]
 }

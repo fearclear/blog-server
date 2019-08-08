@@ -1,0 +1,33 @@
+{% block header %}
+  <title>form</title>
+{% endblock %}
+
+{% block content %}
+  <form method="post" action="http://127.0.0.1:7001/blog/api/signIn">
+    <input name="userName" placeholder="name"/>
+    <input name="password" placeholder="password"/>
+    <button type="submit">提交</button>
+    <button type="reset">重置</button>
+  </form>
+  <script>
+    function signIn() {
+      return fetch('http://127.0.0.1:7001/blog/api/signIn', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'userName=1&password=2'
+      }).then(res => {
+        return res.text()
+      })
+    }
+    signIn().then(data => {
+      console.log(data)
+    })
+    setTimeout(() => {
+      window
+        .location
+        .reload()
+    }, 100000)
+  </script>
+{% endblock %}

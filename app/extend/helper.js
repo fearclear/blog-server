@@ -1,9 +1,8 @@
 'use strict'
-
-const md5 = require('md5')
 const moment = require('moment')
 const nodemailer = require('nodemailer')
 const MarkdownIt = require('markdown-it')
+const bcrypt = require('bcrypt')
 const private_config = require('../../config/private_config')
 
 /** *************
@@ -48,9 +47,6 @@ const emailPattern = new RegExp(`${emailWhilelist.join('|')}$`, 'i')
 const namePattern = /^([A-Za-z0-9]|[\u4E00-\uFA29]|[\uE7C7-\uE7F3])+(?:[_-]([A-Za-z0-9]|[\u4E00-\uFA29]|[\uE7C7-\uE7F3])+)*$/
 
 module.exports = {
-  salt(salt, str) {
-    return md5(salt + str)
-  },
   mail(mailOptions) {
     mailOptions = mailOptions ? mailOptions : {
       from: '"fearclear" <fearcleari@qq.com>', // login user must equel to this user
@@ -88,5 +84,11 @@ module.exports = {
         ]
       }
     }
+  },
+  bhash(salt) {
+    return bcrypt.hash(salt, 10)
+  },
+  bcompare(salt, hash) {
+    return bcrypt.compare(salt, hash)
   }
 }

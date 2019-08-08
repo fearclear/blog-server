@@ -1,21 +1,20 @@
 {
   "name": "blog-server",
-  "egg": {
-    "typescript": true
-  },
   "version": "1.0.0",
   "description": "",
   "private": true,
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "egg": "^2.17.0",
+    "egg-cluster": "^1.24.0",
     "egg-mysql": "^3.0.0",
     "egg-passport": "^2.0.1",
     "egg-passport-github": "^1.0.0",
     "egg-passport-local": "^1.2.1",
     "egg-router-plus": "^1.2.1",
     "egg-scripts": "^2.5.0",
+    "egg-socket.io": "^4.1.6",
     "egg-static": "^2.1.1",
-    "egg-ts-helper": "^1.11.0",
     "egg-view-assets": "^1.1.2",
     "egg-view-nunjucks": "^2.2.0",
     "koa-is-json": "^1.0.0",
@@ -42,12 +41,12 @@
     "node": ">=8.9.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-blog-server",
-    "stop": "egg-scripts stop --title=egg-server-blog-server",
-    "dev": "egg-bin dev -r egg-ts-helper/register",
+    "start": "egg-scripts start --daemon",
+    "stop": "egg-scripts stop",
+    "dev": "egg-bin dev",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
-    "test-local": "egg-bin test -- --ts test",
+    "test-local": "egg-bin test -- test",
     "cov": "egg-bin cov",
     "lint": "eslint .",
     "tsc": "ets && tsc -p tsconfig.json",

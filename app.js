@@ -1,30 +1,47 @@
 'use strict'
-const LocalStrategy = require('passport-local').Strategy
 
 module.exports = app => {
-  // 挂载 strategy
-  app.passport.use(new LocalStrategy({
-    passReqToCallback: true
-  }, (req, userName, password, done) => {
-    // format user
-    const user = {
-      provider: 'local',
-      userName,
-      password
-    }
-    console.debug('%s %s get user: %j', req.method, req.url, user)
-    app.passport.doVerify(req, user, done)
-  }))
 
   // 处理用户信息
-  app.passport.verify(async(ctx, user) => {
-    console.log(user, 'verify')
+  app.passport.verify(async(ctx, { username, password }) => {
+    const getUser = username => {
+      if(~username.indexOf('@')) {
+        return ctx.service.user.getUserByMail(username)
+      }
+      return ctx.service.user.getUserByNickName(username)
+    }
+
+    const exitUser = await getUser(username)
+
+    if(!exitUser) {
+      return null
+    }
+
+    const equal = await ctx.helper.bcompare(password, exitUser.password)
+    if(!equal) {
+      return null
+    }
+
+    return exitUser
+
   })
   app.passport.serializeUser(async(ctx, user) => {
-    console.log(user, 'serializeUser')
+    console.log(user, 'userNmae')
+
+    return {
+      user
+    }
   })
   app.passport.deserializeUser(async(ctx, user) => {
     console.log(user, 'deserializeUser')
+  })
+  app.messenger.on('xxx_action', data => {
+    // ...
+    console.log(data, 'data')
+  })
+  app.messenger.once('egg-ready', () => {
+    // app.messenger.sendToAgent('agent-event', { foo: 'bar' })
+    app.messenger.sendToApp('app-event', { foo: 'bar1' })
   })
 }
 

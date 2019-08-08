@@ -4,7 +4,7 @@ const private_config = require('./private_config')
 module.exports = appInfo => {
   const config = exports = {}
 
-  exports.cluster = {
+  config.cluster = {
     listen: {
       port: 7001
     }
@@ -42,10 +42,12 @@ module.exports = appInfo => {
   }
 
   config.view = {
-    defaultExt: '.html',
+    defaultExtension: '.njk',
     mapping: {
       '.html': 'nunjucks',
-      '.nj': 'nunjucks'
+      '.nj': 'nunjucks',
+      '.njk': 'nunjucks',
+      '.tpl': 'nunjucks'
     }
   }
 

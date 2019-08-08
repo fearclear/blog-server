@@ -8,6 +8,15 @@ class UserService extends Service {
     user.userName = user.email || user.nickName || user.userName
     return await this.app.mysql.query('SELECT * FROM users WHERE email = ? OR nickName = ?', [ user.userName, user.userName ])
   }
+
+  async getUserByMail(email) {
+    return await this.app.mysql.get('users', { email })
+  }
+
+  async getUserByNickName(nickName) {
+    return await this.app.mysql.get('users', { nickName })
+  }
+
   async add(user) {
     return await this.app.mysql.insert('users', user)
   }
