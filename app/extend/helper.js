@@ -1,8 +1,11 @@
 'use strict'
+const fs = require('fs')
+const path = require('path')
 const moment = require('moment')
 const nodemailer = require('nodemailer')
 const MarkdownIt = require('markdown-it')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const private_config = require('../../config/private_config')
 
 /** *************
@@ -90,5 +93,22 @@ module.exports = {
   },
   bcompare(salt, hash) {
     return bcrypt.compare(salt, hash)
+  },
+  generateToken(data) {
+    const salt = fs.readFileSync(path.join(__dirname, '../RSAKEY/rsa_private_key.pem'))
+    const token = jwt.sign({
+      data,
+      exp: moment().add(7, 'd').unix()
+    }, salt, { algorithm: 'RS256' })
+    return token
+  },
+  decodeToken(token) {
+    const salt = fs.readFileSync(path.join(__dirname, '../RSAKEY/rsa_public_key.pem'))
+    try {
+      const data = jwt.verify(token, salt)
+      return data
+    } catch (error) {
+      return null
+    }
   }
 }

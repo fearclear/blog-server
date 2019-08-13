@@ -9,6 +9,8 @@ class UserController extends Controller {
     this.rule = this.ctx.helper.rule.userRule
     this.bhash = this.ctx.helper.bhash
     this.bcompare = this.ctx.helper.bcompare
+    this.generateToken = this.ctx.helper.generateToken
+    this.decodeToken = this.ctx.helper.decodeToken
   }
 
   async signin() {
@@ -27,7 +29,7 @@ class UserController extends Controller {
     if(!exitUser) {
       this.ctx.body = {
         text: '用户名不存在',
-        status: 400
+        status: 401
       }
       return
     }
@@ -37,11 +39,21 @@ class UserController extends Controller {
     if(!equal) {
       this.ctx.body = {
         text: '密码错误',
-        status: 400
+        status: 401
       }
+      return
     }
 
     delete exitUser.password
+
+    // 如果用户存在并且密码正确，则生成JWT token来获取用户信息，这里只写入了id
+    const token = this.generateToken({
+      id: exitUser.id,
+      role: exitUser.role
+    })
+
+    exitUser.token = token
+
     this.ctx.body = {
       ...exitUser
     }
@@ -66,14 +78,14 @@ class UserController extends Controller {
     }
     this.ctx.body = {
       text: '用户名已存在',
-      status: 400
+      status: 401
     }
   }
 
   async signFail() {
     this.ctx.body = {
       text: '登录失败',
-      status: 400
+      status: 401
     }
   }
 

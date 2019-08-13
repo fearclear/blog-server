@@ -3,15 +3,14 @@
 module.exports = () => {
   // 验证用户是否登录
   return async function(ctx, next) {
-    ctx.locals.current_user = null
-    const { user } = ctx
-    if(!user) {
-      return await next()
+    ctx.user = null
+    const token = ctx.get('x-blog-token')
+    if(token) {
+      const extraInfo = ctx.helper.decodeToken(token)
+      if(extraInfo) {
+        ctx.user = extraInfo.data
+      }
     }
-
-    // const count = await ctx.service.message.getMessagesCount(user._id)
-    // user.messages_count = count
-    ctx.locals.current_user = user
     await next()
   }
 }

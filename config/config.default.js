@@ -57,5 +57,10 @@ module.exports = appInfo => {
     agent: false
   }
 
+  config.permission = {
+    admin: 'admin',
+    tourist: 'tourist'
+  }
+
   return config
 }
