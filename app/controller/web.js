@@ -6,8 +6,11 @@ class WebController extends Controller {
   async home() {
     await this.ctx.render('home')
   }
-  async form() {
-    await this.ctx.render('form')
+  async signin() {
+    await this.ctx.render('signin')
+  }
+  async signup() {
+    await this.ctx.render('signup')
   }
 }
 

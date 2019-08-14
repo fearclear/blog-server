@@ -1,0 +1,13 @@
+{% block header %}
+  <title>signup</title>
+{% endblock %}
+
+{% block content %}
+  <form method="post" action="http://127.0.0.1:7001/blog/api/signUp" >
+    <input name="email" placeholder="email" />
+    <input name="nickName" placeholder="nickName" />
+    <input name="password" placeholder="password" />
+    <button type="submit">提交</button>
+    <button type="reset">重置</button>
+  </form>
+{% endblock %}

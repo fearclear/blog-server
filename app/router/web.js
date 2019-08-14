@@ -3,5 +3,6 @@
 module.exports = app => {
   const { router, controller } = app
   router.get('/home', controller.web.home)
-  router.get('/form', controller.web.form)
+  router.get('/signin', controller.web.signin)
+  router.get('/signup', controller.web.signup)
 }

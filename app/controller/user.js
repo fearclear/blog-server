@@ -1,4 +1,5 @@
 'use strict'
+const uuid = require('uuid')
 
 const Controller = require('egg').Controller
 
@@ -59,26 +60,69 @@ class UserController extends Controller {
     }
   }
 
-  async signup() {
-    const user = this.ctx.request.body
-    const { email, nickName, password } = user
-    await this.ctx.validator(this.rule.signUpRule, user)
-    const userInfo = await this.ctx.service.user.getUser({ email })
-    if(!userInfo.length) {
-      const params = {
-        email,
-        nickName
-      }
-      params.password = this.bhash(password)
-      const result = await this.ctx.service.user.addUser(params)
+  async checkEmail() {
+    const { email } = this.ctx.request.query
+    const user = await this.ctx.service.user.getUserByMail(email)
+    if(user) {
       this.ctx.body = {
-        result
+        text: '邮箱已存在',
+        code: 1
       }
       return
     }
     this.ctx.body = {
-      text: '用户名已存在',
-      status: 401
+      text: '邮箱可用',
+      code: 0
+    }
+  }
+
+  async checkNickName() {
+    const { nickName } = this.ctx.request.query
+    const user = await this.ctx.service.user.getUserByNickName(nickName)
+    if(user) {
+      this.ctx.body = {
+        text: '用户名已存在',
+        code: 1
+      }
+      return
+    }
+    this.ctx.body = {
+      text: '用户名可用',
+      code: 0
+    }
+  }
+
+  async signup() {
+    const user = this.ctx.request.body
+    const { email, nickName, password } = user
+    await this.ctx.validator(this.rule.signUpRule, user)
+    const emailCheck = await this.ctx.service.user.getUserByMail(email)
+    if(emailCheck) {
+      this.ctx.body = {
+        text: '邮箱已存在',
+        status: 401
+      }
+      return
+    }
+    const nickNameCheck = await this.ctx.service.user.getUserByNickName(nickName)
+    if(nickNameCheck) {
+      this.ctx.body = {
+        text: '用户名已存在',
+        status: 401
+      }
+      return
+    }
+    const params = {
+      id: uuid.v4(),
+      createTime: new Date(),
+      email,
+      nickName,
+      role: ''
+    }
+    params.password = await this.bhash(password)
+    const result = await this.ctx.service.user.add(params)
+    this.ctx.body = {
+      result
     }
   }
 
@@ -91,15 +135,6 @@ class UserController extends Controller {
 
   async sendSMS() {
     console.log('send')
-  }
-
-  async create() {
-    const user = this.ctx.request.body
-    await this.ctx.validator(this.rule.signUpRule, user)
-    const result = await this.ctx.service.user.add(user)
-    this.ctx.body = {
-      result
-    }
   }
 
 }
