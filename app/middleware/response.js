@@ -30,6 +30,13 @@ module.exports = () => {
             text: body.text
           }
         }
+        const user = ctx.user
+        if(user && user.refresh) {
+          body.token = ctx.helper.generateToken({
+            id: user.id,
+            role: user.role
+          })
+        }
         ctx.body = body
       }
     } catch (err) {
@@ -38,13 +45,6 @@ module.exports = () => {
       const status = err.status || 500
       const error = status === 500 && ctx.app.config.env === 'prod' ? 'Internal Server Error' : err.message
       ctx.body = { text: error, success: false }
-      // 422表单验证错误请求处理
-      if(status === 422) {
-        ctx.body.detail = err.errors
-        if(err.errors instanceof Array) {
-          ctx.body.text = err.errors[0].message
-        }
-      }
       ctx.status = status
     }
   }

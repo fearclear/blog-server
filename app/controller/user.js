@@ -16,13 +16,20 @@ class UserController extends Controller {
 
   async signin() {
     const { userName, password } = this.ctx.request.body
-    await this.ctx.validator(this.rule.signInRule, this.ctx.request.body)
-
+    try {
+      await this.ctx.validator(this.rule.signInRule, this.ctx.request.body)
+    } catch (error) {
+      this.ctx.body = {
+        status: 401,
+        text: error.errors[0].message
+      }
+      return
+    }
     const getUser = userName => {
       if(~userName.indexOf('@')) {
         return this.ctx.service.user.getUserByMail(userName)
       }
-      return this.ctx.service.user.getUserByNickName(userName)
+      return this.ctx.service.user.getUserByuserName(userName)
     }
 
     const exitUser = await getUser(userName)
@@ -76,9 +83,9 @@ class UserController extends Controller {
     }
   }
 
-  async checkNickName() {
-    const { nickName } = this.ctx.request.query
-    const user = await this.ctx.service.user.getUserByNickName(nickName)
+  async checkUserName() {
+    const { userName } = this.ctx.request.query
+    const user = await this.ctx.service.user.getUserByuserName(userName)
     if(user) {
       this.ctx.body = {
         text: '用户名已存在',
@@ -94,8 +101,16 @@ class UserController extends Controller {
 
   async signup() {
     const user = this.ctx.request.body
-    const { email, nickName, password } = user
-    await this.ctx.validator(this.rule.signUpRule, user)
+    const { email, userName, password } = user
+    try {
+      await this.ctx.validator(this.rule.signUpRule, user)
+    } catch (error) {
+      this.ctx.body = {
+        status: 401,
+        text: error.errors[0].message
+      }
+      return
+    }
     const emailCheck = await this.ctx.service.user.getUserByMail(email)
     if(emailCheck) {
       this.ctx.body = {
@@ -104,8 +119,8 @@ class UserController extends Controller {
       }
       return
     }
-    const nickNameCheck = await this.ctx.service.user.getUserByNickName(nickName)
-    if(nickNameCheck) {
+    const userNameCheck = await this.ctx.service.user.getUserByuserName(userName)
+    if(userNameCheck) {
       this.ctx.body = {
         text: '用户名已存在',
         status: 401
@@ -116,7 +131,7 @@ class UserController extends Controller {
       id: uuid.v4(),
       createTime: new Date(),
       email,
-      nickName,
+      userName,
       role: ''
     }
     params.password = await this.bhash(password)

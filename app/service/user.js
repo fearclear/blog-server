@@ -3,18 +3,13 @@
 const Service = require('egg').Service
 
 class UserService extends Service {
-  async get(user) {
-    user = user || {}
-    user.userName = user.email || user.nickName || user.userName
-    return await this.app.mysql.query('SELECT * FROM users WHERE email = ? OR nickName = ?', [ user.userName, user.userName ])
-  }
 
   async getUserByMail(email) {
     return await this.app.mysql.get('users', { email })
   }
 
-  async getUserByNickName(nickName) {
-    return await this.app.mysql.get('users', { nickName })
+  async getUserByuserName(userName) {
+    return await this.app.mysql.get('users', { userName })
   }
 
   async add(user) {

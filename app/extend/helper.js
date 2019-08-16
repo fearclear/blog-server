@@ -78,8 +78,8 @@ module.exports = {
           { type: 'email', message: '邮箱类型错误' },
           { pattern: emailPattern, message: '不支持的邮箱' }
         ],
-        nickName: [
-          { required: true, message: '请输入昵称' },
+        userName: [
+          { required: true, message: '请输入用户名' },
           { pattern: namePattern, message: '请输入合法的用户名' }
         ],
         password: [

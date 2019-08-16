@@ -12,6 +12,8 @@ module.exports = app => {
   api.post('/signIn', controller.user.signin)
   api.post('/signUp', controller.user.signup)
   api.get('/signFail', controller.user.signFail)
+  api.get('/checkUser', controller.user.checkUserName)
+  api.get('/checkEmail', controller.user.checkEmail)
 
 
   // article

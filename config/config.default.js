@@ -28,7 +28,7 @@ module.exports = appInfo => {
   config.session_secret = private_config.session_secret
 
   // add your config here
-  config.middleware = [ 'gzip', 'response', 'authUser' ]
+  config.middleware = [ 'response', 'authUser', 'blockUser', 'gzip' ]
 
   config.gzip = {
     threshold: 1024
