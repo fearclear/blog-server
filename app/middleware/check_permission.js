@@ -5,7 +5,7 @@ module.exports = () => {
     /**
      * 无用户或用户权限
      */
-    if(!ctx.user || !ctx.user.role) {
+    if(!ctx.user) {
       ctx.body = {
         status: 403,
         text: '没有权限'

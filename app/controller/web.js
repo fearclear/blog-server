@@ -12,6 +12,9 @@ class WebController extends Controller {
   async signup() {
     await this.ctx.render('signup')
   }
+  async article() {
+    await this.ctx.render('article')
+  }
 }
 
 module.exports = WebController

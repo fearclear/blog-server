@@ -33,8 +33,7 @@ module.exports = () => {
         const user = ctx.user
         if(user && user.refresh) {
           body.token = ctx.helper.generateToken({
-            id: user.id,
-            role: user.role
+            id: user.id
           })
         }
         ctx.body = body

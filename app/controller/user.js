@@ -11,7 +11,6 @@ class UserController extends Controller {
     this.bhash = this.ctx.helper.bhash
     this.bcompare = this.ctx.helper.bcompare
     this.generateToken = this.ctx.helper.generateToken
-    this.decodeToken = this.ctx.helper.decodeToken
   }
 
   async signin() {
@@ -54,10 +53,9 @@ class UserController extends Controller {
 
     delete exitUser.password
 
-    // 如果用户存在并且密码正确，则生成JWT token来获取用户信息，这里只写入了id
-    const token = this.generateToken({
-      id: exitUser.id,
-      role: exitUser.role
+    // 如果用户存在并且密码正确，则生成token来获取用户信息，并删除之前的token
+    const token = await this.generateToken({
+      id: exitUser.id
     })
 
     exitUser.token = token
@@ -135,10 +133,9 @@ class UserController extends Controller {
       role: ''
     }
     params.password = await this.bhash(password)
-    const result = await this.ctx.service.user.add(params)
-    this.ctx.body = {
-      result
-    }
+    await this.ctx.service.user.add(params)
+    delete params.password
+    this.ctx.body = params
   }
 
   async signFail() {

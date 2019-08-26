@@ -4,6 +4,10 @@ const Service = require('egg').Service
 
 class UserService extends Service {
 
+  async getUserById(id) {
+    return await this.app.mysql.get('users', { id })
+  }
+
   async getUserByMail(email) {
     return await this.app.mysql.get('users', { email })
   }

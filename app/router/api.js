@@ -15,7 +15,9 @@ module.exports = app => {
   api.get('/checkUser', controller.user.checkUserName)
   api.get('/checkEmail', controller.user.checkEmail)
 
-
   // article
-  api.post('/create', checkPermission.bind(null, [ permission.admin, permission.tourist ]), controller.article.create)
+  api.post('/article/create', checkPermission.bind(null, [ permission.tourist ]), controller.article.create)
+  api.get('/article/detail', controller.article.detail)
+  api.get('/article/list', controller.article.list)
+  api.del('/article/del', controller.article.del)
 }
