@@ -2,12 +2,12 @@
 // const fs = require('fs')
 // const path = require('path')
 const moment = require('moment')
-const nodemailer = require('nodemailer')
+// const nodemailer = require('nodemailer')
 const MarkdownIt = require('markdown-it')
 const bcrypt = require('bcrypt')
 // const jwt = require('jsonwebtoken')
 const uuid = require('uuid')
-const private_config = require('../../config/private_config')
+// const private_config = require('../../config/private_config')
 
 /** *************
  * moment 设置
@@ -30,12 +30,12 @@ md.set({
  * nodemailer设置
  */
 
-const transporter = nodemailer.createTransport({
-  service: 'qq',
-  secureConnection: true, // use SSL
-  port: 465, // port
-  auth: private_config.mail.auth
-})
+// const transporter = nodemailer.createTransport({
+//   service: 'qq',
+//   secureConnection: true, // use SSL
+//   port: 465, // port
+//   auth: private_config.mail.auth
+// })
 
 /** ***************
  * 校验规则正则初始化
@@ -51,22 +51,22 @@ const emailPattern = new RegExp(`${emailWhilelist.join('|')}$`, 'i')
 const namePattern = /^([A-Za-z0-9]|[\u4E00-\uFA29]|[\uE7C7-\uE7F3])+(?:[_-]([A-Za-z0-9]|[\u4E00-\uFA29]|[\uE7C7-\uE7F3])+)*$/
 
 module.exports = {
-  mail(mailOptions) {
-    mailOptions = mailOptions ? mailOptions : {
-      from: '"fearclear" <fearcleari@qq.com>', // login user must equel to this user
-      to: '527085767@qq.com',
-      subject: 'Title Nodejs Send',
-      text: 'Some simple words.',
-      html: '<b>The main content of the mail. You have successfully logged in to Nodejs.</b>'
-    }
-    transporter.sendMail(mailOptions, function(error, info) {
-      if(error) {
-        console.log(error, 'error')
-        return console.log(error)
-      }
-      console.log('Message sent: ' + info.response)
-    })
-  },
+  // mail(mailOptions) {
+  //   mailOptions = mailOptions ? mailOptions : {
+  //     from: '"fearclear" <fearcleari@qq.com>', // login user must equel to this user
+  //     to: '527085767@qq.com',
+  //     subject: 'Title Nodejs Send',
+  //     text: 'Some simple words.',
+  //     html: '<b>The main content of the mail. You have successfully logged in to Nodejs.</b>'
+  //   }
+  //   transporter.sendMail(mailOptions, function(error, info) {
+  //     if(error) {
+  //       console.log(error, 'error')
+  //       return console.log(error)
+  //     }
+  //     console.log('Message sent: ' + info.response)
+  //   })
+  // },
   rule: {
     userRule: {
       signInRule: {
