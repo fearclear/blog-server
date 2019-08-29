@@ -204,4 +204,9 @@ describe('test/app/controller/user.test.js', () => {
       })
   })
 
+  after(() => {
+    // 删除新增的用户
+    app.mysql.delete('users', { email: 'abc@qq.com' })
+  })
+
 })

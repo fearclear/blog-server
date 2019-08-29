@@ -31,33 +31,11 @@ describe('test/app/service/user.test.js', () => {
     assert(user.id === exitUser.id)
   })
 
-  it('新增用户', async() => {
-    const params = {
-      id: '33',
-      email: 'vv@qq.com',
-      userName: 'vv',
-      password: '123',
-      createTime: new Date(),
-      role: ''
-    }
-    const result = await ctx.service.user.add(params)
-    assert(result.affectedRows)
-  })
-
-  it('锁定用户', async() => {
-    const params = {
-      id: '33',
-      is_blocked: true
-    }
-    const result = await ctx.service.user.update(params)
-    assert(result.affectedRows)
-  })
-
   it('更新用户信息', async() => {
     const params = {
-      id: '33',
-      email: 'vva@qq.com',
-      userName: 'vva',
+      id: '92ed3732-f87e-4640-8246-7c90fda0ee44',
+      email: 'cc@gmail.com',
+      userName: 'cc',
       password: '123',
       createTime: new Date(),
       role: 'vv'
