@@ -19,8 +19,8 @@ class ArticleService extends Service {
     return await this.app.mysql.count('article')
   }
 
-  async del(id) {
-    return await this.app.mysql.update('article', { id, deleted: true })
+  async update(data) {
+    return await this.app.mysql.update('article', data)
   }
 
 }

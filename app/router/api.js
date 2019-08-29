@@ -11,13 +11,13 @@ module.exports = app => {
   // home page
   api.post('/signIn', controller.user.signin)
   api.post('/signUp', controller.user.signup)
-  api.get('/signFail', controller.user.signFail)
   api.get('/checkUser', controller.user.checkUserName)
   api.get('/checkEmail', controller.user.checkEmail)
 
   // article
-  api.post('/article/create', checkPermission.bind(null, [ permission.tourist ]), controller.article.create)
-  api.get('/article/detail', controller.article.detail)
+  api.post('/article', checkPermission.bind(null, [ permission.tourist ]), controller.article.create)
+  api.get('/article', controller.article.detail)
   api.get('/article/list', controller.article.list)
-  api.del('/article/del', controller.article.del)
+  api.del('/article', controller.article.del)
+  api.put('/article', controller.article.update)
 }

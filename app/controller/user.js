@@ -138,16 +138,6 @@ class UserController extends Controller {
     this.ctx.body = params
   }
 
-  async signFail() {
-    this.ctx.body = {
-      text: '登录失败',
-      status: 401
-    }
-  }
-
-  async sendSMS() {
-    console.log('send')
-  }
 
 }
 

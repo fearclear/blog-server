@@ -30,12 +30,6 @@ module.exports = () => {
             text: body.text
           }
         }
-        const user = ctx.user
-        if(user && user.refresh) {
-          body.token = ctx.helper.generateToken({
-            id: user.id
-          })
-        }
         ctx.body = body
       }
     } catch (err) {

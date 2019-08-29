@@ -12,7 +12,7 @@
   </form>
   <script>
     function create() {
-      return fetch('http://127.0.0.1:7001/blog/api/article/create', {
+      return fetch('http://127.0.0.1:7001/blog/api/article', {
         method: 'post',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -24,7 +24,7 @@
       })
     }
     function get() {
-      return fetch('http://127.0.0.1:7001/blog/api/article/detail?id=1', {
+      return fetch('http://127.0.0.1:7001/blog/api/article?id=1', {
         method: 'get',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,7 +46,7 @@
       })
     }
     function deleteVV() {
-      return fetch('http://127.0.0.1:7001/blog/api/article/del?id=31', {
+      return fetch('http://127.0.0.1:7001/blog/api/article?id=3', {
         method: 'delete',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

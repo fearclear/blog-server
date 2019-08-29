@@ -4,6 +4,21 @@ const { app, assert } = require('egg-mock/bootstrap')
 
 describe('test/app/controller/user.test.js', () => {
 
+  it('登录规则错误', async() => {
+    const params = {
+      userName: '',
+      password: '00'
+    }
+    return await app.httpRequest()
+      .post('/blog/api/signIn')
+      .send(params)
+      .expect(401)
+      .then(res => {
+        assert(!res.body.success)
+        assert(res.body.text === '请输入用户名')
+      })
+  })
+
   it('用户名不存在', async function() {
     const params = {
       userName: 'test',
@@ -37,15 +52,12 @@ describe('test/app/controller/user.test.js', () => {
         assert(res.body.text = '密码错误')
       })
 
-    // const result = await app.httpRequest()
-    //   .get('/signin')
-    //   .expect(200)
   })
 
   it('登录成功', async() => {
     const params = {
-      userName: 'fearcleari@gmail.com',
-      password: '123456'
+      userName: 'adm',
+      password: '123'
     }
 
     return await app.httpRequest()
@@ -114,23 +126,23 @@ describe('test/app/controller/user.test.js', () => {
 
   })
 
-  // it('注册成功', async() => {
-  //   const params = {
-  //     email: 'abc@qq.com',
-  //     userName: 'admin2',
-  //     password: '123123'
-  //   }
+  it('注册成功', async() => {
+    const params = {
+      email: 'abc@qq.com',
+      userName: 'adminabc',
+      password: '123123'
+    }
 
-  //   return await app.httpRequest()
-  //     .post('/blog/api/signUp')
-  //     .send(params)
-  //     .expect(200)
-  //     .then(res => {
-  //       assert(res.body.success)
-  //     })
-  // })
+    return await app.httpRequest()
+      .post('/blog/api/signUp')
+      .send(params)
+      .expect(200)
+      .then(res => {
+        assert(res.body.success)
+      })
+  })
 
-  it('检查邮箱是否可用', async() => {
+  it('检查邮箱已存在', async() => {
     const params = {
       email: 'fearcleari@gmail.com'
     }
@@ -142,7 +154,53 @@ describe('test/app/controller/user.test.js', () => {
       .then(res => {
         assert(res.body.success)
         assert(res.body.text === '邮箱已存在')
-        assert(res.body.code = 1)
+        assert(res.body.code === 1)
+      })
+  })
+
+  it('邮箱可用', async() => {
+    const params = {
+      email: 'ccav@gamil.com'
+    }
+
+    return await app.httpRequest()
+      .get('/blog/api/checkEmail')
+      .query(params)
+      .expect(200)
+      .then(res => {
+        assert(res.body.success)
+        assert(res.body.code === 0)
+      })
+  })
+
+  it('检查用户名已存在', async() => {
+    const params = {
+      userName: 'admin'
+    }
+
+    return await app.httpRequest()
+      .get('/blog/api/checkUser')
+      .query(params)
+      .expect(200)
+      .then(res => {
+        assert(res.body.success)
+        assert(res.body.text === '用户名已存在')
+        assert(res.body.code === 1)
+      })
+  })
+
+  it('用户名可用', async() => {
+    const params = {
+      userName: 'hahaabc'
+    }
+
+    return await app.httpRequest()
+      .get('/blog/api/checkUser')
+      .query(params)
+      .expect(200)
+      .then(res => {
+        assert(res.body.success)
+        assert(res.body.code === 0)
       })
   })
 
