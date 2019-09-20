@@ -12,6 +12,7 @@
     "generator-star-spacing": "off",
     "semi":["error", "never"],
     "comma-dangle": ["error", "never"],
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "no-bitwise": "off"
   }
 }

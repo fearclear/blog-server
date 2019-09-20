@@ -1,0 +1,68 @@
+{% block header %}
+  <title>form</title>
+{% endblock %}
+
+{% block content %}
+  <form method="post" action="http://127.0.0.1:7001/blog/api/article/create">
+    <input name="author" placeholder="author"/>
+    <input name="title" placeholder="title"/>
+    <textarea name="detail"></textarea>
+    <button type="submit">提交</button>
+    <button type="reset">重置</button>
+  </form>
+  <script>
+    function create() {
+      return fetch('http://127.0.0.1:7001/blog/api/article', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-blog-token': '596e198f-2307-40e6-bdeb-50ee59fc7953'
+        },
+        body: 'author=admin1&title=123456&detail=123'
+      }).then(res => {
+        return res.text()
+      })
+    }
+    function get() {
+      return fetch('http://127.0.0.1:7001/blog/api/article?id=1', {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-blog-token': '596e198f-2307-40e6-bdeb-50ee59fc7953'
+        }
+      }).then(res => {
+        return res.text()
+      })
+    }
+    function list() {
+      return fetch('http://127.0.0.1:7001/blog/api/article/list', {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-blog-token': '596e198f-2307-40e6-bdeb-50ee59fc7953'
+        }
+      }).then(res => {
+        return res.text()
+      })
+    }
+    function deleteVV() {
+      return fetch('http://127.0.0.1:7001/blog/api/article?id=3', {
+        method: 'delete',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'x-blog-token': '596e198f-2307-40e6-bdeb-50ee59fc7953'
+        }
+      }).then(res => {
+        return res.text()
+      })
+    }
+    deleteVV().then(data => {
+      console.log(data)
+    })
+    setTimeout(() => {
+      window
+        .location
+        .reload()
+    }, 100000)
+  </script>
+{% endblock %}

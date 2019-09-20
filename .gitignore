@@ -7,6 +7,8 @@ yarn.lock
 coverage/
 .idea/
 run/
+RSAKEY/
+config/private_config.js
 .DS_Store
 *.sw*
 *.un~

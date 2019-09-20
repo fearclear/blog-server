@@ -1,33 +1,40 @@
 # blog-server
 
+## 记录原因
+---
+- 鉴于经常忘记之前写的内容，所以这里记录自己开发时的想法
+
+## jwt
+---
 
 
-## QuickStart
+#### jwt方案弃用原因
 
-<!-- add docs here for user -->
+- 采用jwt是为了方便无状态接口访问，结果使用之后需要用redis存储已过期状态，然后由于jwt过长所以只存储了role和id，
+  现在打算转回redis加sql查询的方式，将token生成后存入redis，再通过sql查询用户状态
+#### jwt问题解决方案
 
-see [egg docs][egg] for more detail.
+- 取消schedule任务序列
+- 重写decodeToken和generateToken方法
 
-### Development
+## gzip
+---
+- 返回数组的时候经过gzip压缩处理使返回格式出错，由于静态页面不在egg下写，所以不需要额外的gzip中间件
 
-```bash
-$ npm i
-$ npm run dev
-$ open http://localhost:7001/
-```
+## 状态码说明
+---
 
-### Deploy
-
-```bash
-$ npm start
-$ npm stop
-```
-
-### npm scripts
-
-- Use `npm run lint` to check code style.
-- Use `npm test` to run unit test.
-- Use `npm run autod` to auto detect dependencies upgrade, see [autod](https://www.npmjs.com/package/autod) for more detail.
+| 状态码 |    说明    |
+|:------:|:----------:|
+|  400   |  格式错误  |
+|  401   |  信息错误  |
+|  403   |  没有权限  |
+| 40001  | 用户未登录 |
 
 
-[egg]: https://eggjs.org
+## 文章表state
+---
+
+- 1: 草稿
+- 2: 正文
+- 3: 删除

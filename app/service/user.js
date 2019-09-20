@@ -3,19 +3,29 @@
 const Service = require('egg').Service
 
 class UserService extends Service {
-  async getUser(payload) {
-    payload = payload || {}
-    payload.userName = payload.email || payload.nickName || payload.userName
-    return await this.app.mysql.query('SELECT * FROM blog_users WHERE email = ? OR nickName = ?', [ payload.userName, payload.userName ])
+
+  async getUserList() {
+    return await this.app.mysql.select('users')
   }
-  async addUser(payload) {
-    return await this.app.mysql.insert('blog_users', payload)
+
+  async getUserById(id) {
+    return await this.app.mysql.get('users', { id })
   }
-  async deleteUser(payload) {
-    return await this.app.mysql.delete('blog_users', payload)
+
+  async getUserByMail(email) {
+    return await this.app.mysql.get('users', { email })
   }
-  async updateUser(payload) {
-    return await this.app.mysql.updateUser('blog_users', payload)
+
+  async getUserByuserName(userName) {
+    return await this.app.mysql.get('users', { userName })
+  }
+
+  async add(user) {
+    return await this.app.mysql.insert('users', user)
+  }
+
+  async update(user) {
+    return await this.app.mysql.update('users', user)
   }
 }
 
